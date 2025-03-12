@@ -53,4 +53,9 @@ public class UserServiceImpl implements UserService {
         }
         return "";
     }
+
+    public User loadUserByUsername(String email) {
+        Optional<User> user = repository.findByEmail(email);
+        return user.orElse(null);
+    }
 }

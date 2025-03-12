@@ -11,4 +11,6 @@ public interface UserService {
     public User upDtprfrncs(String email, Map<String, Object> preferences);
 
     public String lgnUsr(String email,String password);
+
+    public User loadUserByUsername(String email);
 }
