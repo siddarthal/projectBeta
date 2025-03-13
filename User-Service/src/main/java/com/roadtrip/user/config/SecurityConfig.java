@@ -2,7 +2,7 @@ package com.roadtrip.user.config;
 
 import com.roadtrip.user.service.UserService;
 import com.roadtrip.user.util.JwtUtil;
-import  com.roadtrip.user.util.JwtRequestFilter;
+import com.roadtrip.user.util.JwtRequestFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,15 +15,10 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-    @Autowired
-    UserService userService;
-
-    @Autowired
-    JwtUtil jwtUtil;
 
     @Bean
-    JwtRequestFilter requestFilter(){
-        return new JwtRequestFilter(jwtUtil,userService);
+    JwtRequestFilter requestFilter() {
+        return new JwtRequestFilter();
     }
 
     @Bean
@@ -35,7 +30,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/signup", "/api/login").permitAll()
+                        .requestMatchers("/api/user-service/signup", "/api/user-service/login").permitAll()
                         .anyRequest().authenticated()).
                 addFilterBefore(requestFilter(), UsernamePasswordAuthenticationFilter.class);
         return http.build();

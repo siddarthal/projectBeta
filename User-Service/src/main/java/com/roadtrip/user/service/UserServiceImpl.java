@@ -1,15 +1,17 @@
 package com.roadtrip.user.service;
 
+import com.roadtrip.user.entity.CustomUserDetails;
 import com.roadtrip.user.entity.User;
 import com.roadtrip.user.repo.UserRepository;
 import com.roadtrip.user.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import java.util.Map;
 import java.util.Optional;
 
-
+@Service
 public class UserServiceImpl implements UserService {
 
     @Autowired
@@ -54,8 +56,11 @@ public class UserServiceImpl implements UserService {
         return "";
     }
 
-    public User loadUserByUsername(String email) {
+    public CustomUserDetails loadUserByUsername(String email) {
         Optional<User> user = repository.findByEmail(email);
-        return user.orElse(null);
+        if(user.isPresent()){
+            return new CustomUserDetails(user.get());
+        }
+        return null;
     }
 }
