@@ -1,5 +1,6 @@
 package com.roadtrip.user.service;
 
+import com.roadtrip.user.dto.LoginRequest;
 import com.roadtrip.user.entity.CustomUserDetails;
 import com.roadtrip.user.entity.User;
 
@@ -11,7 +12,7 @@ public interface UserService {
 
     public User upDtprfrncs(String email, Map<String, Object> preferences);
 
-    public String lgnUsr(String email, String password);
+    public String lgnUsr(LoginRequest req);
 
     public CustomUserDetails loadUserByUsername(String email);
 }

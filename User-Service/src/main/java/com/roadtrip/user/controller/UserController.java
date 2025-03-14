@@ -1,9 +1,12 @@
 package com.roadtrip.user.controller;
 
+import com.roadtrip.user.dto.LoginRequest;
+import com.roadtrip.user.dto.ResponseBean;
 import com.roadtrip.user.entity.User;
 import com.roadtrip.user.service.UserService;
 import com.roadtrip.user.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,23 +23,21 @@ public class UserController {
     JwtUtil jwtUtil;
 
     @PostMapping("/signup")
-    public ResponseEntity<User> userSignup(@RequestBody User user) {
+    public ResponseEntity<ResponseBean<?>> userSignup(@RequestBody User user) {
         User registeredUser = userService.rgstrUsr(user);
-        return ResponseEntity.ok(registeredUser);
+        return ResponseEntity.ok(ResponseBean.success("Registered User Successfully", registeredUser));
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> userLogin(@RequestBody Map<String, String> credentials) {
-        String email = credentials.get("email");
-        String password = credentials.get("password");
-        String token = userService.lgnUsr(email, password);
-        return ResponseEntity.ok(token);
+    public ResponseEntity<ResponseBean<?>> userLogin(@RequestBody LoginRequest credentials) {
+        String token = userService.lgnUsr(credentials);
+        return ResponseEntity.ok().header(HttpHeaders.AUTHORIZATION, "Bearer " + token).body(ResponseBean.success("login successful"));
     }
 
     @PatchMapping("/updatePref")
-    public ResponseEntity<User> updatePreferences(@RequestHeader("Authorization") String token, @RequestBody Map<String, Object> preferences) {
+    public ResponseEntity<ResponseBean<?>> updatePreferences(@RequestHeader("Authorization") String token, @RequestBody Map<String, Object> preferences) {
         String email = jwtUtil.extractUsername(token.replace("Bearer ", ""));
         User updatedUser = userService.upDtprfrncs(email, preferences);
-        return ResponseEntity.ok(updatedUser);
+        return ResponseEntity.ok(ResponseBean.success("updated preferences successfully", updatedUser));
     }
 }
