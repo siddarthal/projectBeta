@@ -1,8 +1,11 @@
 package com.recommendationengine.service;
 
 
+import com.recommendationengine.entity.Attraction;
 import com.recommendationengine.entity.AttractionRecommendation;
 import com.recommendationengine.entity.RecommendationRequest;
+import org.springframework.ai.chat.prompt.Prompt;
+import org.springframework.ai.openai.OpenAiChatClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.databind.ObjectMapper;
