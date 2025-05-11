@@ -56,38 +56,9 @@ public class AttractionServiceImpl {
 
     }
 
-    public List<Attraction> getAttractionsByCategory(String category) {
-        return attractionRepository.findByCategory(category);
-    }
-
-    public List<Attraction> getAttractionsByLocation(String location) {
-        return attractionRepository.findByLocation(location);
-    }
-
-    public List<Attraction> getAttractionsByCategoryAndLocation(String category, String location) {
-        return attractionRepository.findByCategoryAndLocation(category, location);
-    }
-
     public Attraction createAttraction(Attraction attraction) {
         // Validation could be added here or through bean validation
         return attractionRepository.save(attraction);
-    }
-
-    public Optional<Attraction> updateAttraction(String id, Attraction attractionDetails) {
-        Optional<Attraction> attractionOptional = attractionRepository.findById(id);
-
-        if (attractionOptional.isPresent()) {
-            Attraction existingAttraction = attractionOptional.get();
-            existingAttraction.setName(attractionDetails.getName());
-            existingAttraction.setLocation(attractionDetails.getLocation());
-            existingAttraction.setCategory(attractionDetails.getCategory());
-            existingAttraction.setTimeRequired(attractionDetails.getTimeRequired());
-            existingAttraction.setDescription(attractionDetails.getDescription());
-
-            return Optional.of(attractionRepository.save(existingAttraction));
-        }
-
-        return Optional.empty();
     }
 
     public boolean deleteAttraction(String id) {

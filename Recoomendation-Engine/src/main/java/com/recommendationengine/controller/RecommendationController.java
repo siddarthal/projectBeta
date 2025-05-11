@@ -1,7 +1,6 @@
 package com.recommendationengine.controller;
 
 
-
 import com.recommendationengine.entity.AttractionRecommendation;
 import com.recommendationengine.entity.RecommendationRequest;
 import com.recommendationengine.service.RecommendationEngineService;
@@ -13,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/recommendations")
-@CrossOrigin(origins = "*")
+//@CrossOrigin(origins = "*")
 public class RecommendationController {
 
     @Autowired

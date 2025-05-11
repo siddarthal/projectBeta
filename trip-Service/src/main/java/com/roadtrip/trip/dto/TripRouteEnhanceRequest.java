@@ -1,12 +1,10 @@
-package com.recommendationengine.entity;
-
+package com.roadtrip.trip.dto;
 
 import lombok.Data;
 
 import java.util.List;
-
 @Data
-public class RecommendationRequest {
+public class TripRouteEnhanceRequest {
     private long totalDistance;
     private long totalDuration;
     private List<Integer> optimizedWaypoints;

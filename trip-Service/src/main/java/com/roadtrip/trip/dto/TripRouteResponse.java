@@ -1,20 +1,16 @@
-package com.recommendationengine.entity;
-
+package com.roadtrip.trip.dto;
 
 import lombok.Data;
-
 import java.util.List;
 
 @Data
-public class RecommendationRequest {
+public class TripRouteResponse {
     private long totalDistance;
     private long totalDuration;
     private List<Integer> optimizedWaypoints;
     private String polylinePoints;
     private List<StopDetails> stops;
     private List<AttractionDetails> attractions;
-    private int maxDuration; // in hours
-    private List<String> preferences; // user preferences for the trip
 
     @Data
     public static class StopDetails {

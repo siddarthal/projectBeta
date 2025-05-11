@@ -20,12 +20,5 @@ public class RecoomendationEngineApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(RecoomendationEngineApplication.class, args);
 	}
-	@FeignClient(name = "ATTRACTION-SERVICE")
-	public interface AttractionServiceClient {
-		@GetMapping("/api/attractions/{id}")
-		Attraction getAttractionById(@PathVariable("id") String id);
 
-		@GetMapping("/api/attractions")
-		List<Attraction> getAttractionsByLocation(@RequestParam("location") String location);
-	}
 }

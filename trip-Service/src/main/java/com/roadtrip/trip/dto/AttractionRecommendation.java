@@ -1,17 +1,13 @@
-package com.roadtrip.attraction.entity;
+package com.roadtrip.trip.dto;
+
 
 import lombok.Data;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-
 
 import java.util.List;
-import java.util.Map;
+
 @Data
-@Document(collection = "attractions")
-public class Attraction {
-    @Id
-    private String id;
+public class AttractionRecommendation {
+
     private List<AttractionDetails> attractions;
     @Data
     public static class AttractionDetails {
@@ -27,4 +23,5 @@ public class Attraction {
         private String timeNeededTospent;
         private String description;
     }
+
 }

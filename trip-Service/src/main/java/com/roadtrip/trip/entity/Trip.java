@@ -4,6 +4,7 @@ import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,5 +17,6 @@ public class Trip {
     private String source;
     private String destination;
     private int duration;
-    private List<Map<String, Object>> stops;
+    private HashMap<String, List<String>> stops;
+    private String aid;
 }

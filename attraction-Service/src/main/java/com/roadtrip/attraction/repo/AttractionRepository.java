@@ -8,10 +8,6 @@ import java.util.List;
 
 @Repository
 public interface AttractionRepository extends MongoRepository<Attraction, String> {
-    List<Attraction> findByCategory(String category);
 
-    List<Attraction> findByLocation(String location);
-
-    List<Attraction> findByCategoryAndLocation(String category, String location);
 
 }

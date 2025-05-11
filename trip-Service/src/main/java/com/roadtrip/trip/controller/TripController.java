@@ -1,6 +1,10 @@
 package com.roadtrip.trip.controller;
 
+import com.roadtrip.trip.dto.AttractionRecommendation;
 import com.roadtrip.trip.dto.ResponseBean;
+import com.roadtrip.trip.dto.TripRouteEnhanceRequest;
+import com.roadtrip.trip.dto.TripRouteResponse;
+import com.roadtrip.trip.entity.CreateTrip;
 import com.roadtrip.trip.entity.Trip;
 import com.roadtrip.trip.service.TripServiceImpl;
 import com.roadtrip.trip.util.JwtUtil;
@@ -21,12 +25,26 @@ public class TripController {
     JwtUtil jwtUtil;
 
     @PostMapping("/createTrip")
-    public ResponseEntity<ResponseBean<Trip>> saveTrip(@RequestHeader("Authorization") String token, @RequestBody Trip trip) {
+    public ResponseEntity<ResponseBean<?>> saveTrip(@RequestHeader("Authorization") String token, @RequestBody CreateTrip trip) {
+
+        String email = jwtUtil.extractUsername(token.replace("Bearer ", ""));
+        trip.getTrip().setUserId(email);
+        Trip saveTrip = service.createTrip(trip.getTrip(),trip.getRecommendations(),token);
+        return ResponseEntity.ok(ResponseBean.success("Trip Saved successfully", trip));
+    }
+    @PostMapping("/fetchTrip")
+    public ResponseEntity<ResponseBean<TripRouteResponse>> fetchTrip(@RequestHeader("Authorization") String token, @RequestBody Trip trip) {
 
         String email = jwtUtil.extractUsername(token.replace("Bearer ", ""));
         trip.setUserId(email);
-        Trip saveTrip = service.createTrip(trip);
-        return ResponseEntity.ok(ResponseBean.success("Trip Saved successfully", trip));
+        TripRouteResponse tripDetails = service.fetchTrip(trip);
+        return ResponseEntity.ok(ResponseBean.success("Trip Details fetched from api successfully", tripDetails));
+    }
+    @PostMapping("/enhanceTrip")
+    public ResponseEntity<ResponseBean<?>> enHanceTrip(@RequestHeader("Authorization") String token, @RequestBody TripRouteEnhanceRequest requset) {
+
+        List<AttractionRecommendation> enHanceTrip = service.enHanceTrip(requset);
+        return ResponseEntity.ok(ResponseBean.success("Trip enhanced successfully", enHanceTrip));
     }
 
     @GetMapping("/{id}")

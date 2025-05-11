@@ -24,23 +24,11 @@ public class AttractionController {
     }
 
     @GetMapping
-    public ResponseEntity<ResponseBean<List<Attraction>>> getAllAttractions(
-            @RequestParam(required = false) String category,
-            @RequestParam(required = false) String location) {
+    public ResponseEntity<ResponseBean<List<Attraction>>> getAllAttractions() {
 
-        List<Attraction> attractions;
+        List<Attraction> attractions = attractionService.getAllAttractions();
 
-        if (category != null && location != null) {
-            attractions = attractionService.getAttractionsByCategoryAndLocation(category, location);
-        } else if (category != null) {
-            attractions = attractionService.getAttractionsByCategory(category);
-        } else if (location != null) {
-            attractions = attractionService.getAttractionsByLocation(location);
-        } else {
-            attractions = attractionService.getAllAttractions();
-        }
-
-        return  ResponseEntity.ok(ResponseBean.success("Data Fetched Successfully", attractions));
+        return ResponseEntity.ok(ResponseBean.success("Data Fetched Successfully", attractions));
     }
 
     @GetMapping("/{id}")
@@ -50,19 +38,12 @@ public class AttractionController {
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-
     @PostMapping
-    public ResponseEntity<Attraction> createAttraction(@RequestBody Attraction attraction) {
-        Attraction newAttraction = attractionService.createAttraction(attraction);
+    public ResponseEntity<Attraction> createAttraction(@RequestBody List<Attraction> attraction) {
+        Attraction newAttraction = attractionService.createAttraction(attraction.get(0));
         return new ResponseEntity<>(newAttraction, HttpStatus.CREATED);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Attraction> updateAttraction(@PathVariable String id, @RequestBody Attraction attraction) {
-        Optional<Attraction> updatedAttraction = attractionService.updateAttraction(id, attraction);
-        return updatedAttraction.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
-    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> deleteAttraction(@PathVariable String id) {
